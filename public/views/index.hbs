@@ -1,5 +1,7 @@
 <html style="scroll-behavior: smooth;">
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://flyaceairline.weebly.com/uploads/1/2/4/2/124276951/logomakr-2vshy0_orig.png">
     <style>
       @font-face{
         font-family: SF Pro Light;
@@ -45,7 +47,7 @@
         <p style="width: 100%; text-align: center; padding: 10px; font-family: SF Pro; background-color: #F2F8FC; border-radius: 10px;">This application is only avaliable to Android users at this time.</p>
         <div style="width: 100%; height: 250px; position: relative;">
           <img src="https://docs.google.com/drawings/d/e/2PACX-1vTi-aSA_Bmw7-YKn3c0Cu89YCJGHSRHsXL5pQ9xvs17YHExUUPDsOiP57G0plt8FKISUXezgU0Ml1zc/pub?w=811&h=811" style="width: 250px; position: absolute; top: 0px; top: 0px;">
-          <p style="margin: 0px; margin-left: 275px; font-family: SF Pro Bold; font-size: 20px; margin-top: 20px;"><span style="font-family: SF Pro Bold; font-size: 40px; margin-top: 20px;">Ace App</span><br><span style="font-family: SF Pro; color: #588fe8; margin-bottom: 10px;font-size: 20px;">Ace Airlines</span><br><br><img src="stars/5stars.png" style="width: 50px;"><span style="font-family: sans-serif; margin-left: 10px; font-size: 12px;">0 Ratings</span><br style="margin-bottom: 10px;"><br><span style="font-family: SF Pro; font-size: 20px; margin-top: 30px;">Travel</span><br><br><button style="font-family: SF Pro;background-color: white; border: 1px solid; border-radius: 10px;padding: 10px; width: 150px;">Download Now</button></p>
+          <p style="margin: 0px; margin-left: 275px; font-family: SF Pro Bold; font-size: 20px; margin-top: 20px;"><span style="font-family: SF Pro Bold; font-size: 40px; margin-top: 20px;">Ace App</span><br><span style="font-family: SF Pro; color: #588fe8; margin-bottom: 10px;font-size: 20px;">Ace Airlines</span><br><br><img src="stars/5stars.png" style="width: 50px;"><span style="font-family: sans-serif; margin-left: 10px; font-size: 12px;">0 Ratings</span><br style="margin-bottom: 10px;"><br><span style="font-family: SF Pro; font-size: 20px; margin-top: 30px;">Travel</span><br><br><a href="/public/application/aceapp.apk" download><button style="font-family: SF Pro;background-color: white; border: 1px solid; border-radius: 10px;padding: 10px; width: 150px;" download>Download Now</button></a></p>
         </div>
         <div id="screenshots" style="width: 100%; height: auto; padding-top: 40px;">
           <hr style="background-color: black; border: 0.5px solid;">
@@ -66,7 +68,7 @@
         <div id="reviews" style="width: 100%; height: auto; padding-top: 20px;">
           <hr style="background-color: black; border: 0.5px solid;">
           <h1 style="font-family: SF Pro Light; font-size: 27px; margin-top: 20px; margin-bottom: 5px;"><span style="font-family: SF Pro;">User</span> Reviews</h1>
-          <p style="font-family: SF Pro; font-size: 15px; margin: 0px;">{{reviews}} reviews</p>
+          <p style="font-family: SF Pro; font-size: 15px; margin: 0px;" id="commentNum">{{reviews}} reviews</p>
           <div style="width: 100%; height: auto; margin-top: 20px; overflow-x: scroll; overflow-y: hidden; position: relative; padding-bottom: 330px;" id="comments-box">
             <!--<div style="display: inline-block; margin-right: 20px; height: 140px; width: 275px; float: left; border-radius: 15px; background-color: #f6f6f6; padding-top: 0px; padding: 15px; margin-bottom: 10px;">
               <img src="stars/5stars.png" style="width: 200px; margin-bottom: 15px;">
@@ -74,7 +76,7 @@
               <p style="font-family: SF Pro; font-size: 20px; margin: 0px;margin-top: 15px;">Love the ace app</p>
                <p style="font-family: SF Pro Light; font-size: 20px; margin: 0px; margin-top: 3px; text-overflow: ellipsis; height: 22px; width: 100%; overflow: hidden; white-space: nowrap">The ace app is great! I love all of its features. Great job Developers! I think the design by diagonal studios is excellent! Great job everyone! Wait, I still have more space, hold up I need some space</p>
             </div>-->
-            <div style="width: calc(100% - 40px); height: auto; display: block; position: absolute; bottom: 0px; left: 0px; border-radius: 10px; border: 1px solid #DADCE0; padding: 15px; padding-top: 15px; padding-bottom: 0px;">
+            <div style="width: calc(100% - 40px); height: auto; display: block; position: absolute; bottom: 0px; left: 0px; border-radius: 10px; border: 1px solid #DADCE0; padding: 15px; padding-top: 15px; padding-bottom: 0px;" id="comment-form-wrapper">
               <form id="comment-form">
                 <p style="font-family: SF Pro; margin: 0px; margin-bottom: 7px;">Leave a review.</p>
                 <input required type="text" style="font-family: SF Pro; margin: none; margin-left: 0px; outline: none; width: 400px; height: 40px; border: none; border-bottom: 4px solid #588fe8;" autocomplete="off" id="name" placeholder="Name"><br><br>
@@ -106,6 +108,16 @@
   </body>
   <script src="/socket.io/socket.io.js"></script>
   <script>
+    var postType = 'load'
+    var post = ""
+
+    if (localStorage.getItem('comment') !== null) {
+      document.getElementById('comment-form-wrapper').style.display = "none"
+      document.getElementById('comments-box').style.paddingBottom = "0px"
+    } else {
+
+    }
+    var id = ""
     /*setInterval(() => {
       if (document.getElementById('name').value !== "" && document.getElementById('title').value !== "" && document.getElementById('message').value !== "") {
         document.getElementById('submitButton').style.backgroundColor = "#588fe8"
@@ -161,10 +173,16 @@
       }
     }
 
+    var ranNum = "abcdefghijhlmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
     var wrapperCount = 0
   
-    socket.on('post-in-socket', (name, title, message, rating) => {
+    socket.on('post-in-socket', (name, title, message, rating, postId) => {
+      var commentNumber = Number((document.getElementById('commentNum').innerHTML).slice(0, 1)) + 1
+
+      document.getElementById('commentNum').innerHTML = commentNumber + " Reviews"
       wrapperCount++
+
       var wrapper = document.createElement('div')
       wrapper.style.display = 'inline-block'
       wrapper.style.marginRight = '20px'
@@ -176,14 +194,15 @@
       wrapper.style.paddingTop = "0px"
       wrapper.style.padding = "15px"
       wrapper.style.marginBottom = "10px"
-      wrapper.id = "wrapper" + wrapperCount
+      wrapper.style.position = "relative"
+      wrapper.id = postId
       document.getElementById('comments-box').appendChild(wrapper)
       
       var stars = document.createElement('img')
       stars.src = 'stars/' + rating + 'stars.png'
       stars.style.width = "200px"
       stars.style.marginBottom = "15px"
-      document.getElementById('wrapper' + wrapperCount).appendChild(stars)
+      document.getElementById(postId).appendChild(stars)
 
       var userName = document.createElement('p')
       userName.style.fontFamily = "SF Pro"
@@ -191,7 +210,7 @@
       userName.style.color = "#bcbcbc"
       userName.style.fontSize = "16px"
       userName.style.margin = "0px"
-      document.getElementById('wrapper' + wrapperCount).appendChild(userName)
+      document.getElementById(postId).appendChild(userName)
 
       var messageTitle = document.createElement('p')
       messageTitle.style.fontFamily = "SF Pro"
@@ -199,7 +218,7 @@
       messageTitle.style.margin = "0px"
       messageTitle.style.marginTop = "15px"
       messageTitle.style.fontSize = "20px"
-      document.getElementById('wrapper' + wrapperCount).appendChild(messageTitle)
+      document.getElementById(postId).appendChild(messageTitle)
 
       var actualMessage = document.createElement('p')
       actualMessage.style.fontFamily = 'SF Pro Light'
@@ -212,7 +231,21 @@
       actualMessage.style.width = "100%"
       actualMessage.style.overflow = "hidden"
       actualMessage.style.whiteSpace = "nowrap"
-      document.getElementById('wrapper' + wrapperCount).appendChild(actualMessage)
+      document.getElementById(postId).appendChild(actualMessage)
+
+      if (localStorage.getItem('personalPostId') == postId) {
+        var edit = document.createElement('p')
+        edit.style.fontFamily = 'SF Pro'
+        edit.innerHTML = "edit"
+        edit.style.fontSize = "15px"
+        edit.style.color = "#313132"
+        edit.style.position = "absolute"
+        edit.style.margin = "0px"
+        edit.style.top = "15px"
+        edit.style.right = "15px"
+        document.getElementById(postId).appendChild(edit)
+      }
+
       /*
       
       <div style="display: inline-block; margin-right: 20px; height: 140px; width: 275px; float: left; border-radius: 15px;background-color: #f6f6f6; padding-top: 0px; padding: 15px; margin-bottom: 10px;">
@@ -225,14 +258,22 @@
       */
     })
 
-    socket.on('addedComment', (num) => {
-      document.getElementById('')
-    })
-
     document.getElementById('comment-form').addEventListener('submit', (e) => {
       e.preventDefault()
-      socket.emit('addComment', (Number(document.getElementById('commentNum').value) + 1).toString())
-      socket.emit('post', document.getElementById('name').value, document.getElementById('title').value, document.getElementById('message').value, starCount)
+      for(var i = 0; i < 20; i++) {
+        var ranSeq = Math.floor(Math.random() * 62)
+        var newNum = ranNum.slice(ranSeq, ranSeq + 1)
+        id = id + newNum
+      }
+      localStorage.setItem('personalPostId', id)
+      socket.emit('post', "@" + document.getElementById('name').value, document.getElementById('title').value, document.getElementById('message').value, starCount, id)
+      document.getElementById('name').value = ""
+      document.getElementById('title').value = ""
+      document.getElementById('message').value = ""
+      setStar('0')
+      localStorage.setItem('comment', 'true')
+      document.getElementById('comment-form-wrapper').style.display = "none"
+      document.getElementById('comments-box').style.paddingBottom = "0px"
     })
   </script>
 </html>
