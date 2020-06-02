@@ -1,7 +1,7 @@
 <html style="scroll-behavior: smooth;">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="https://flyaceairline.weebly.com/uploads/1/2/4/2/124276951/logomakr-2vshy0_orig.png">
+    <link rel="icon" href="Favicon.png">
     <style>
       @font-face{
         font-family: SF Pro Light;
@@ -14,6 +14,10 @@
       @font-face{
         font-family: SF Pro Bold;
         src: url(SF-Pro-Display-Black.otf)
+      }
+      @font-face{
+        font-family: SF Pro Highlight;
+        src: url(SF-Pro-Display-Light.otf)
       }
       ::-webkit-scrollbar{
         width: 4px;
@@ -30,13 +34,33 @@
           bottom: 10px;
         }
       }
+      @media only screen and (max-width: 1100px) {
+        #desktop-theme-nav{
+          display: none !important;
+        }
+        #mobile-theme-nav{
+          display: block !important;
+        }
+        #desktop-theme{
+          display: none !important;
+        }
+        #mobile-theme{
+          display: block !important;
+        }
+        #rights-desk{
+          display: none !important;
+        }
+        body{
+          overflow-x: hidden
+        }
+      }
     </style>
     <title>Ace IT | An Ace Airline Company</title>
   </head>
   <body style="margin: 0px; scroll-behavior: smooth;">
     <div id="begin" style="width: 100%; height: 50px; font-family: SF Pro Light; background-color: #313132; box-shadow: 0 0 5px rgba(0, 0, 0, 0.4)">
       <center>
-        <div style="height: 100%; width: 1100px; text-align: left; position: relative;">
+        <div id="desktop-theme-nav" style="display: block; height: 100%; width: 1100px; text-align: left; position: relative;">
           <img src="icon.png" style="position: absolute; top: 25%; left: 0px; height: 50%; display: inline-block;"><!--
           --><button style="margin: 0px; height: 100%; margin-left: 35px; border: none; background-color: transparent; font-family: SF Pro Light; font-size: 1.1em; color: white">Home</button><!--
           --><button style="margin: 0px; height: 100%; margin-left: 5%; border: none; background-color: transparent; font-family: SF Pro Light; font-size: 1.1em; color: white;" onclick="window.location = '#begin'">Ace Application</button><!--
@@ -46,8 +70,12 @@
           --><button style="margin: 0px; height: 100%; margin-left: 5%; border: none; background-color: transparent; font-family: SF Pro Light; font-size: 1.1em; color: white;" onclick="window.location = '#dev-pro'">Developer Profile</button><!--
           --><button style="margin: 0px; height: 100%; margin-left: 5%; border: none; background-color: transparent; font-family: SF Pro Light; font-size: 1.1em; color: white;">All Apps</button>
         </div>
+        <div id="mobile-theme-nav" style="display: none; width: 100%; height: 100%; position: relative;">
+          <img src="icon.png" style="width: 30px; position: absolute; top: calc(50% - 15px); left: 50%; margin-left: -15px;">
+        </div>
       </center>
     </div>
+    <div id="desktop-theme">
     <center>
       <div style="width: 1100px; height: auto; text-align: left;">
         <h1 style="font-family: SF Pro Light; font-size: 27px; margin-top: 20px;"><span style="font-family: SF Pro;">Ace Airlines</span> Application</h1>
@@ -55,7 +83,7 @@
         <p style="width: 100%; text-align: center; padding: 10px; font-family: SF Pro; background-color: #F2F8FC; border-radius: 10px;">This application is only avaliable to Android users at this time.</p>
         <div style="width: 100%; height: 250px; position: relative;">
           <img src="https://docs.google.com/drawings/d/e/2PACX-1vTi-aSA_Bmw7-YKn3c0Cu89YCJGHSRHsXL5pQ9xvs17YHExUUPDsOiP57G0plt8FKISUXezgU0Ml1zc/pub?w=811&h=811" style="width: 250px; position: absolute; top: 0px; top: 0px;">
-          <p style="margin: 0px; margin-left: 275px; font-family: SF Pro Bold; font-size: 20px; margin-top: 20px;"><span style="font-family: SF Pro Bold; font-size: 40px; margin-top: 20px;">Ace App</span><br><span style="font-family: SF Pro; color: #588fe8; margin-bottom: 10px;font-size: 20px;">Ace Airlines</span><br><br><img id="officialRating" src="stars/5stars.png" style="width: 50px;"><span style="font-family: sans-serif; margin-left: 10px; font-size: 12px;" id="reviewNum">0 Ratings</span><br style="margin-bottom: 10px;"><br><span style="font-family: SF Pro; font-size: 20px; margin-top: 30px;">Travel</span><br><br><a href="/public/application/aceapp.apk" download><button style="font-family: SF Pro;background-color: white; border: 1px solid; border-radius: 10px;padding: 10px; width: 150px;" download>Download Now</button></a></p>
+          <p style="margin: 0px; margin-left: 275px; font-family: SF Pro Bold; font-size: 20px; margin-top: 20px;"><span style="font-family: SF Pro Bold; font-size: 40px; margin-top: 20px;">Ace App</span><br><span style="font-family: SF Pro; color: #588fe8; margin-bottom: 10px;font-size: 20px;">Ace Airlines</span><br><br><img id="officialRating" src="stars/5stars.png" style="width: 50px;"><span style="font-family: sans-serif; margin-left: 10px; font-size: 12px;" id="reviewNum">0 Ratings</span><br style="margin-bottom: 10px;"><br><span style="font-family: SF Pro; font-size: 20px; margin-top: 30px;">Travel</span><br><br><a href="aceapp.apk" download><button style="font-family: SF Pro;background-color: white; border: 1px solid; border-radius: 10px;padding: 10px; width: 150px;">Download Now</button></a></p>
         </div>
         <div id="screenshots" style="width: 100%; height: auto; padding-top: 40px;">
           <hr style="background-color: black; border: 0.5px solid;">
@@ -70,7 +98,7 @@
           <hr style="background-color: black; border: 0.5px solid;">
           <h1 style="font-family: SF Pro Light; font-size: 27px; margin-top: 20px;"><span style="font-family: SF Pro;">Application</span> Information</h1>
           <p style="font-family: SF Pro Light; font-size: 20px;">Welcome to the Ace App where we making booking with Ace Airlines easy. We have added features that streamline your travel experience and make you have the adventure of a lifetime.</p>
-          <p style="font-family: SF Pro; margin-top: 20px; font-size: 20px;">Newest Updates - v3.0.1</p>
+          <p style="font-family: SF Pro; margin-top: 20px; font-size: 20px;">Newest Updates - v2.0.1</p>
           <p style="font-family: SF Pro Light; font-size: 20px; line-height: 35px;">- Updated user interface<br>- Updated server to allow multiple sockets to connect during one instance<br>- Worked on responsive design (mobile support)<br>- Added saving flights to personal server to optimize user experience<br>- Fixed issue where users connect to their account without requesting to<br>- Added security feature that hides user information from malicious software<br>- Minor bug fixes with backend system</p>
         </div>
         <div id="reviews" style="width: 100%; height: auto; padding-top: 20px;">
@@ -78,18 +106,13 @@
           <h1 style="font-family: SF Pro Light; font-size: 27px; margin-top: 20px; margin-bottom: 5px;"><span style="font-family: SF Pro;">User</span> Reviews</h1>
           <p style="font-family: SF Pro; font-size: 15px; margin: 0px;" id="commentNum">{{reviews}} reviews</p>
           <div style="width: 100%; height: auto; margin-top: 20px; overflow-x: scroll; overflow-y: hidden; position: relative; padding-bottom: 330px;" id="comments-box">
-            <!--<div style="display: inline-block; margin-right: 20px; height: 140px; width: 275px; float: left; border-radius: 15px; background-color: #f6f6f6; padding-top: 0px; padding: 15px; margin-bottom: 10px;">
-              <img src="stars/5stars.png" style="width: 200px; margin-bottom: 15px;">
-              <p style="font-family: SF Pro; color: #bcbcbc; font-size: 16px; margin: 0px;">@ronanram</p>
-              <p style="font-family: SF Pro; font-size: 20px; margin: 0px;margin-top: 15px;">Love the ace app</p>
-               <p style="font-family: SF Pro Light; font-size: 20px; margin: 0px; margin-top: 3px; text-overflow: ellipsis; height: 22px; width: 100%; overflow: hidden; white-space: nowrap">The ace app is great! I love all of its features. Great job Developers! I think the design by diagonal studios is excellent! Great job everyone! Wait, I still have more space, hold up I need some space</p>
-            </div>-->
+
             <div style="width: calc(100% - 40px); height: auto; display: block; position: absolute; bottom: 0px; left: 0px; border-radius: 10px; border: 1px solid #DADCE0; padding: 15px; padding-top: 15px; padding-bottom: 0px;" id="comment-form-wrapper">
               <form id="comment-form">
                 <p style="font-family: SF Pro; margin: 0px; margin-bottom: 7px;">Leave a review.</p>
                 <input required type="text" style="font-family: SF Pro; margin: none; margin-left: 0px; outline: none; width: 400px; height: 40px; border: none; border-bottom: 4px solid #588fe8;" autocomplete="off" id="name" placeholder="Name"><br><br>
                 <input required type="text" style="font-family: SF Pro; margin: none; margin-left: 0px; outline: none; width: 400px; height: 40px; border: none; border-bottom: 4px solid #588fe8;" autocomplete="off" id="title" placeholder="Message Title"><br><br>
-                <input required type="text" style="font-family: SF Pro; margin: none; margin-left: 0px; outline: none; width: 500px; height: 40px; border: none; border-bottom: 4px solid #588fe8;" autocomplete="off" id="message" placeholder="Message"><br><br>
+                <textarea required type="text" style="min-width: 500px; max-height: 40px; font-family: SF Pro; margin: none; margin-left: 0px; outline: none; width: 500px; height: 40px; border: none; border-bottom: 4px solid #588fe8;" autocomplete="off" id="message" placeholder="Message"></textarea><br><br>
                 <div style="width: 100%; height: 40px; margin-bottom: 15px;">
                   <img src="prestar/off.png" id="star1" width="40px" onclick="setStar('1')">
                   <img src="prestar/off.png" id="star2" width="40px" onclick="setStar('2')">
@@ -117,9 +140,48 @@
           </div>
         </div>
       </div>
-      <p style="font-family: SF Pro Light; margin: 0px; color: white; width: calc(100% - 20px); margin-top: 40px; padding: 10px; background-color: #313132;">Copyright Ace IT 2020 All Rights Reserved</p>
+      <p id="rights-desk" style="font-family: SF Pro Light; margin: 0px; color: white; width: calc(100% - 20px); margin-top: 40px; padding: 10px; background-color: #313132; text-align: center;">Copyright Ace IT 2020 All Rights Reserved</p>
     </center>
+    </div>
     <p id="update-ava" style="animation: update 0.5s forwards; display: none; width: auto; height: auto; letter-spacing: 1px; font-family: SF Pro; padding: 20px; color: #07d600; border-radius: 10px; background-color: #daffd9; border: 1px solid #a1ff9e; position: fixed; bottom: -50px; right: 10px;">A new version on AceIT is avaliable. <a href="/" style="color: #588fe8; text-decoration: none;">Update?</a></p>
+    <div id="mobile-theme" style="display: none; width: 100%; height: 100%; position: absolute; top: 50px; left: 0px;">
+      <center>
+        <p style="width: 80%; text-align: center; padding: 10px; font-family: SF Pro; background-color: #F2F8FC; border-radius: 10px; margin-top: 30px;">This application is only avaliable to Android users at this time.</p>
+        <img src="https://docs.google.com/drawings/d/e/2PACX-1vTi-aSA_Bmw7-YKn3c0Cu89YCJGHSRHsXL5pQ9xvs17YHExUUPDsOiP57G0plt8FKISUXezgU0Ml1zc/pub?w=811&h=811" style="width: 200px; margin-top: 30px;">
+        <h1 style="width: 300px; font-family: SF Pro;">Download the Official Ace Application</h1>
+        <a href="aceapp.apk" download><button style="background-color: #1a1a1a; border-radius: 14px; color: white; border: none; width: 230px; padding: 15px; font-family: SF Pro; margin-top: 10px;">Download Now (Android)</button></a>
+        <div style="width: 300px; height: 350px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4); margin-top: 30px;border-radius: 10px; margin-bottom: 30px; padding: 15px;">
+          <p style="font-family: SF Pro; font-size: 20px;">Developed by everyday passengers to optimize your experince</p>
+          <div style="border: 2px solid; width: 120px; height: 0px; background-color: black;"></div>
+          <p style="font-family: SF Pro Light; font-size: 20px;">This application was developed by middle school students to improve the way we book flights today. You can do anything from booking flights to reading up on Ace Airline news. As airline passengers ourselves, we wanted to make sure your experience on Ace Airlines is your best.</p>
+        </div>
+        <div style="width: 300px; height: 350px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4); margin-top: 30px;border-radius: 10px; margin-bottom: 30px; padding: 15px;">
+          <img src="aceitlogo.png" style="width: 100px">
+          <p style="font-family: SF Pro; font-size: 20px;">Ace IT</p>
+          <div style="border: 2px solid; width: 120px; height: 0px; background-color: black;"></div>
+          <p style="font-family: SF Pro Light; font-size: 20px;">Ace IT (Internet Technology) is the branch of Ace Airlines that manages Ace Airlines online presence. Currently Ace IT has produced Ace Os Pro, Ace Interface, Air OS, and Ace App.</p>
+        </div>
+        <div style="width: 300px; height: 350px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4); margin-top: 30px;border-radius: 10px; margin-bottom: 30px; padding: 15px;">
+          <img src="diagonal-studios.png" style="width: 100px">
+          <p style="font-family: SF Pro; font-size: 20px;">Diagonal Studios</p>
+          <div style="border: 2px solid; width: 120px; height: 0px; background-color: black;"></div>
+          <p style="font-family: SF Pro Light; font-size: 20px;">In cooperation with AceIT, Diagonal Studios led by Drew Crocker and Ben Lambertson designed and built the app from scratch. This app uses complex consepts to fullfill the requests of Ace Airline passengers.</p>
+        </div>
+        <p style="font-family: SF Pro Light; margin: 0px; color: #e60f0f; width: 100%; margin-top: 20px; padding: 10px; background-color: transparent; text-align: center;">Use this on a desktop for more information.</p>
+      </center>
+      <p id="rights" style="font-family: SF Pro Light; margin: 0px; color: white; width: 100%; margin-top: 40px; padding: 10px; background-color: #313132; text-align: center;">Copyright Ace IT 2020 All Rights Reserved</p>
+    </div>
+    <div id="ext-comment" style="display: none; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.4); position: fixed; top: 0px; left: 0px; overflow: scroll; padding-bottom: 70px;">
+      <span onclick="this.parentElement.style.display = 'none'" style="cursor: grab; font-size: 30px; font-family: roboto; color: white; position: fixed; top: 70px; right: 70px;">&times;</span>
+      <center>
+        <div style="width: 80%; height: auto; margin: 70px; border-radius: 10px; background-color: white; padding: 30px; text-align: left;">
+          <img id="ext-rating" src="stars/0stars.png" style="width: 200px;">
+          <p id="ext-person" style="font-family: SF Pro; color: black;">@FlightDude</p>
+          <p id="ext-title" style="font-family: SF Pro Bold; color: black; font-size: 35px; margin: 0px;">This is the title of the post.</p>
+          <pre id="ext-message" style="font-family: SF Pro;">This is the body text in case the post exceeds the maximum limit of characters.</pre>
+        </div>
+      </center>
+    </div>
   </body>
   <script src="/socket.io/socket.io.js"></script>
   <script>
@@ -198,7 +260,7 @@
     var ranNum = "abcdefghijhlmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
     var wrapperCount = 0
-  
+
     socket.on('post-in-socket', (name, title, message, rating, postId) => {
       var commentNumber = Number((document.getElementById('commentNum').innerHTML).slice(0, 1)) + 1
       var reviewNumber = Number((document.getElementById('reviewNum').innerHTML).slice(0, 1)) + 1
@@ -220,6 +282,9 @@
       wrapper.style.marginBottom = "10px"
       wrapper.style.position = "relative"
       wrapper.id = postId
+      wrapper.onclick = function() {
+        openExtended(name, title, message, rating, postId)
+      }
       document.getElementById('comments-box').appendChild(wrapper)
       
       var stars = document.createElement('img')
@@ -284,6 +349,14 @@
 
       */
     })
+
+    function openExtended(name, title, message, rating, id) {
+      document.getElementById('ext-comment').style.display = "block"
+      document.getElementById('ext-rating').src = 'stars/' + rating.toString() + 'stars.png'
+      document.getElementById('ext-person').textContent = name
+      document.getElementById('ext-title').textContent = title
+      document.getElementById('ext-message').textContent = message
+    }
 
     function setIdOff(){
       console.log('function action')

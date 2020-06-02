@@ -4,40 +4,27 @@ const express = require('express')
 const app = express()
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
-const mysql = require('mysql')
+const nodemailer = require('nodemailer')
+const os = require('os')
 
 var serverReload = false
 
-var con = mysql.createConnection({
-  host: process.env.HOST,
-  database: process.env.DATABASE,
-  user: process.env.USER,
-  password: process.env.PASSWORD
+var transport = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD,
+  }
 })
+
+var mailOptions = {
+  from: "AceIT <aceairofficial@gmail.com>",
+  to: "andrewdc@madisoncity.k12.al.us, benlovesplanes@gmail.com, drewcrocker23@gmail.com",
+  subject: 'Someone left a comment on AceIT!',
+  html: "This is an email alert that someone has left a comment on AceIt!<br>Check it out at <a href='https://aceit.flightdude737.repl.co'>Visit AceIT to see feedback.</a>"
+}
 
 var emptyData = false
-
-con.connect((err) => {
-  if (err) throw err;
-  console.log('Connected to database.')
-  con.query("CREATE TABLE post (name VARCHAR(255), title VARCHAR(255), message VARCHAR(255), rating VARCHAR(255), id VARCHAR(255))", (err, result) => {
-    if (err) {
-      if (err.sqlMessage == "Table 'post' already exists") {
-        console.log("Overriding table creation key...")
-        setTimeout(() => {
-          console.log("\nOverride complete")
-        }, 1000)
-      }
-    }
-  })
-  con.query('SELECT * FROM post', (err, result, fields) => {
-    if (err) throw err
-    if (result == "[]"){
-      console.log('empty')
-      emptyData = true
-    }
-  })
-})
 
 io.on('connection', (socket) => {
   var ratingInfo = JSON.parse(fs.readFileSync('public/rating.json'))
@@ -49,11 +36,9 @@ io.on('connection', (socket) => {
     socket.emit('return-rating', offRating)
   }
   if (emptyData = true) {
-    con.query('SELECT * FROM post', (err, result, fields) => {
-      if (err) throw err
-      result.forEach((post) => {
-        socket.emit('post-in-socket', post.name, post.title, post.message, post.rating, post.id)
-      })
+    var allPosts = JSON.parse(fs.readFileSync('public/posts/posts.json'))
+    allPosts.forEach((post) => {
+      socket.emit('post-in-socket', post.name, post.title, post.message, post.rating, post.id)
     })
   }
   socket.on('addComment', (num) => {
@@ -70,14 +55,20 @@ io.on('connection', (socket) => {
       rate
     })
     fs.writeFileSync('public/rating.json', JSON.stringify(emptydata))
-    var sqlInformation = "INSERT INTO post (name, title, message, rating, id) VALUES ('" + name + "', '" + title + "', '" + message + "', '" + rating + "', '" + id + "')"
-    con.query(sqlInformation, (err, result) => {
-      if (err) {
-        console.log('post')
-      }
-      console.log('Set post')
+    var postData = JSON.parse(fs.readFileSync('public/posts/posts.json'))
+    postData.push({
+      name,
+      title,
+      message,
+      rating,
+      id
     })
+    fs.writeFileSync('public/posts/posts.json', JSON.stringify(postData))
     io.emit('post-in-socket', name, title, message, rating, id)
+    transport.sendMail(mailOptions, (err, response) => {
+      if (err) throw err
+      console.log('Email sent.')
+    })
   })
 })
 
@@ -86,6 +77,10 @@ app.set('view engine', 'hbs')
 app.set('views', 'public/views')
 
 app.get('/', (req, res) => {
+  res.redirect('/ace-application')
+})
+
+app.get('/ace-application', (req, res) => {
   res.render('index', {
     reviews: 0
   })
@@ -97,7 +92,28 @@ app.get('/remove', (req, res) => {
   var empty = []
   var delStarVal = 0
   var rating = data[0].rate
-  con.query("SELECT * FROM post WHERE id = '" + req.query.post + "'", (err, result, fields) => {
+  var postData = JSON.parse(fs.readFileSync('public/posts/posts.json'))
+  var index = -1
+  var dataIndex = 0
+  postData.forEach((post) => {
+    index++
+    if (post.id === req.query.post) {
+      dataIndex = index
+      var currRate = data[0].rate
+      var newRate = Number(currRate) - postData[index].rating
+      empty.push({
+        comments: (Number(data[0].comments) - 1).toString(),
+        rate: (Number(currRate) - postData[index].rating).toString()
+      })
+      var newEmpty = JSON.stringify(empty)
+      fs.writeFileSync('public/rating.json', newEmpty)
+      console.log("Status: query " + req.query.post + " removed")
+      postData.splice(dataIndex, 1)
+      fs.writeFileSync('public/posts/posts.json', JSON.stringify(postData))
+      res.send("<script>window.location = '/'</script>")
+    }
+  })
+  /*con.query("SELECT * FROM post WHERE id = '" + req.query.post + "'", (err, result, fields) => {
     delStarVal = result[0].rating
     con.query("DELETE FROM post where id = '" + req.query.post + "'", (err, buffer) => {
       if (err) {
@@ -105,24 +121,16 @@ app.get('/remove', (req, res) => {
       }
       else {
         console.log(result)
-        var currRate = data[0].rate
-        var newRate = Number(currRate) - result[0].rating
-        empty.push({
-          comments: (Number(data[0].comments) - 1).toString(),
-          rate: (Number(currRate) - result[0].rating).toString()
-        })
-        var newEmpty = JSON.stringify(empty)
-        fs.writeFileSync('public/rating.json', newEmpty)
-        console.log("Status: query " + req.query.post + " removed")
-        res.send("<script>window.location = '/'</script>")
+        
       }
     })
-  })
+  })*/
+})
+
+app.get('*', (req, res) => {
+  res.send("404 error. The server could not find the requested endpoint.")
 })
 
 http.listen(3000, () => {
   console.log('listening...')
-  setTimeout(() => {
-    io.emit('server-update')
-  }, 2000)
 })
